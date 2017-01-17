@@ -123,8 +123,8 @@ char *memoryUsage(int mode){
     fr += mtTop[j*2+1];
     j++;
   }
-  if(mode) return printf("%dkiB / %dkiB (%d\\%)", (heapSize-fr)/1024, heapSize/1024, ((heapSize-fr)*10000)/heapSize);
-  return printf("%dB / %dB (%d\\%)", heapSize-fr, heapSize, ((heapSize-fr)*10000)/heapSize);
+  if(mode) return printf("%pB / %pB (%d\\%)", (double)(heapSize-fr), (double)heapSize, ((heapSize-fr)*10000)/heapSize);
+  return printf("%d B / %d B (%d\\%)", heapSize-fr, heapSize, ((heapSize-fr)*10000)/heapSize);
 }
 
 char *memorySpan(){

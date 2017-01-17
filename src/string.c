@@ -35,23 +35,25 @@ int printBase(char *out, int n, int base){
 
 int printFloat(char *out, double n, int offset){
 	int c = 0;
-	if (n/10 != 0) c+=printFloat(out, n/10., offset+1);
+	if ((long)n/10 > 0) c+=printFloat(out, n/10., offset+1);
 	*(out+c) = bases[(long)n%10];
 	c++;
 	if(offset == 0){
-		*(out+c) = ',';
-		while(n > 0){
-			n *= 10.;
+		for(double l = 10.; (n-(long)n) != 0 && l < 10000.; l*=10.){
+			if(l == 10.){
+				*(out+c) = ',';
+				c++;
+			}
+			*(out+c) = bases[(long)(n*l)%10];
 			c++;
-			*(out+c) = bases[(long)n%10];
 		}
 	}
-	return c+1;
+	return c;
 }
 
 void process(char **format, char **result, va_list *valist){
 	int n;
-	float f;
+	double f;
 	switch(**format){
 		case 'c':
 			*format += 1;
@@ -75,22 +77,36 @@ void process(char **format, char **result, va_list *valist){
 		case 'f':
 			*format += 1;
 			f = (double)va_arg(*valist, double);
-			*result += printFloat(*result, f, 0);
-		break;
-		case 'p':
-			/**format += 1;
-			f = (int)va_arg(*valist, int);
-			if(n < 0) {
-				n*=-1;
+			if(f < 0) {
+				f*=-1;
 				**result = '-';
 				*result+=1;
 			}
-			int prefix = 0;
-			while(n > 1000){
-				n /= 1000.;
-				prefix++;
+			*result += printFloat(*result, f, 0);
+		break;
+		case 'p':
+			*format += 1;
+			f = (double)va_arg(*valist, double);
+			if(f < 0) {
+				f*=-1;
+				**result = '-';
+				*result+=1;
 			}
-			*result += printBase(*result, n, (**format == 'h')?16:10);*/
+			int prefix = 6;
+			if(f > 1){
+				while(f >= 1000 && prefix++ < 12) f /= 1000.;
+			}
+			else{
+				while(f < 1 && prefix-- > 0) f *= 1000.;
+			}
+
+			*result += printFloat(*result, f, 0);
+			**result = ' ';
+			*result+=1;
+			if(prefix != 6){
+				**result = prefixes[prefix];
+				*result+=1;
+			}
 		break;
 	}
 }

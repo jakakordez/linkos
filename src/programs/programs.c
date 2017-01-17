@@ -30,7 +30,7 @@ void Programs_KeyPress(window *this, char key){
 }
 
 window *NEW_Programs(){
-  alert("Info", "Program started!");
+  //alert("Info", "Program started!");
   window *r = (window *)malloc(sizeof(window));
   r->Title = programs_title;
   r->Data = (int *)malloc(sizeof(int));
