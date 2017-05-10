@@ -11,7 +11,7 @@ void Memory_Draw(window *this){
   cli_setcolor(make_color(COLOR_BLACK, COLOR_LIGHT_GREY));
   cli_fill();
   cli_padding(1);
-int *v = this->Data;
+  int *v = this->Data;
   int r = 0;
   cli_setcursor(0, r);
   cli_print("Memory usage:");
