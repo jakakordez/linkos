@@ -29,12 +29,12 @@ void Memory_Init(){
 void *malloc(int size){
   int i = 0;
   int pos = -1;
-  while(1){
-    if(mtTop[i].size == 0) break;
+  // Search for smallest possible chunk with capacity >= size+4
+  while(mtTop[i].size != 0){ // Scan entire table
     if((pos == -1 || mtTop[i].size < mtTop[pos].size) && mtTop[i].size >= size+4) pos = i;
     i++;
   }
-  if(pos < 0) return NULL;
+  if(pos < 0) return NULL; // Chunk not found
   char *end = (char *)(mtTop[pos].offset + mtTop[pos].size - size);
   mtTop[pos].size -= size+4;
   *((int *)(end)-1) = size;
@@ -55,7 +55,7 @@ void free(void *ptr){
   int *location = (int *)(mtTop[pos].offset + mtTop[pos].size); // Location of first chunk
   while(1){
     //cli_print(printf("A. chunk %d (%d) \n", (int)location, *location));
-    if(((int)location)+*location+4 > (int)ptr) break; // Memory chunk containing this pointer
+    if(((int)location)+(*location)+4 > (int)ptr) break; // Memory chunk containing this pointer
     else location = (int *)(((int)location)+(*location)+4); // Check next chunk (add chunk size to current position)
   }
 
@@ -80,25 +80,28 @@ void free(void *ptr){
       }
     }
   }
+  mtTop[j+1].size = 0;
+  mtTop[j+1].offset = 0;
 
-  int k = 0;
-  int r = 0;
-  while(1){
-    if(r >= j+1) break;
+  int k = 0; // Writing index
+  int r = 0; // Reading index
+  while(r < j+1){ // Loop until the new free table entry
     if(mtTop[r].size == 0) r++;
-    else if(mtTop[r].offset + mtTop[r].size == mtTop[r+1].offset) {
-      while(mtTop[r].offset + mtTop[r].size == mtTop[r+1].offset){
-        mtTop[k].size += mtTop[r+1].size;
-        mtTop[k+1].size = 0;
-        r++;
+    else {
+      if(mtTop[k].offset + mtTop[k].size == mtTop[r+1].offset) {
+        while(mtTop[k].offset + mtTop[k].size == mtTop[r+1].offset){
+          mtTop[k].size += mtTop[r+1].size;
+          mtTop[r+1].size = 0;
+          r++;
+        }
       }
+      else{
+        mtTop[k].offset = mtTop[r].offset;
+        mtTop[k].size = mtTop[r].size;
+      }
+      r++;
+      k++;
     }
-    else{
-      mtTop[k].offset = mtTop[r].offset;
-      mtTop[k].size = mtTop[r].size;
-    }
-    r++;
-    k++;
   }
 }
 
