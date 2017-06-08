@@ -11,6 +11,8 @@ i686-elf-gcc -c src/windows.c -o bin/windows.o -std=gnu99 -ffreestanding -O2 -Wa
 i686-elf-gcc -c src/mem.c -o bin/mem.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 i686-elf-gcc -c src/memory.c -o bin/memory.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 i686-elf-gcc -c src/string.c -o bin/string.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -c src/serial.c -o bin/serial.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+i686-elf-gcc -c src/debug.c -o bin/debug.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 i686-elf-gcc -c src/cli.c -o bin/cli.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 i686-elf-gcc -c src/kernel.c -o bin/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 

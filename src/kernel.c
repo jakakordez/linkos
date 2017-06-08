@@ -5,6 +5,7 @@
 #include "string.h"
 #include "mem.h"
 #include "windows.h"
+#include "debug.h"
 
 /* Check if the compiler thinks we are targeting the wrong operating system. */
 #if defined(__linux__)
@@ -24,12 +25,13 @@ void kernel_main() {
 	cli_initialize();
 	Memory_Init();
 	Init_Windows();
+	init_debug();
+	dprintf("Debugger started\n");
 	Open_Window(NEW_Programs());
 	//Open_Window(NEW_Memory());
 	//Open_Window(NEW_Terminal());
-	//cli_print(printf("%d %d %f %f", 0, 5, 2, 1));
+	//cli_print(printf("%d %d %f %f", 0, 5, 2.0, 1.0));
 	//while(1);
-
 	while(1){
 		cli_fullscreen();
 		DrawTaskbar();

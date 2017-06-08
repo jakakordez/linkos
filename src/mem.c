@@ -3,6 +3,7 @@
 #include "mem.h"
 #include "cli.h"
 #include "string.h"
+#include "debug.h"
 
 char *heapTop;
 memTab *mtTop; // Table of free chunks
@@ -27,6 +28,7 @@ void Memory_Init(){
 }
 
 void *malloc(int size){
+  dprintf("malloc ( %d )\n", size);
   int i = 0;
   int pos = -1;
   // Search for smallest possible chunk with capacity >= size+4
@@ -42,6 +44,7 @@ void *malloc(int size){
 }
 
 void free(void *ptr){
+  dprintf("free ( %d )\n", (int)ptr);
   int i = 0;
   int pos = -1;
   while(1){ // Find last free space before our pointer

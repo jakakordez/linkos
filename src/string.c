@@ -111,14 +111,7 @@ void process(char **format, char **result, va_list *valist){
 	}
 }
 
-char * printf(char *format, ...){
-	va_list valist;
-
-	char *presult = result;
-
-	/* initialize valist for num number of arguments */
-	va_start(valist, format);
-
+void sprintf(char *presult, char *format, va_list *valist){
 	while(*format){
 		if(*format == '\\'){
 			format++;
@@ -126,15 +119,19 @@ char * printf(char *format, ...){
 		}
 		else if(*format == '%'){
 			format ++;
-			process(&format, &presult, &valist);
+			process(&format, &presult, valist);
 		}else{
 			*presult++ = *format++;
 		}
 	}
 	*presult = '\0';
+}
 
-	/* clean memory reserved for valist */
-	va_end(valist);
+char *printf(char *format, ...){
+	va_list valist;
+	va_start(valist, format); /* initialize valist for num number of arguments */
+	sprintf(result, format, &valist);
+	va_end(valist); /* clean memory reserved for valist */
 
 	return result;
 }

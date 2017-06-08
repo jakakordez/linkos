@@ -38,12 +38,17 @@ void Memory_KeyPress(window *this, char key){
   }
 }
 
+void Memory_Dispose(window *this){
+  free(this->Data);
+}
+
 window *NEW_Memory(){
   window *r = (window *)malloc(sizeof(window));
   r->Title = memory_title;
   r->CurrentState = MAXIMIZED;
   r->Data = (int *)malloc(sizeof(int));
   r->Draw = Memory_Draw;
+  r->Dispose = Memory_Dispose;
   r->KeyPress = Memory_KeyPress;
   return r;
 }
