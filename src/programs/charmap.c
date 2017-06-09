@@ -22,5 +22,7 @@ window *NEW_Charmap(){
   r->Title = charmap_title;
   r->CurrentState = MAXIMIZED;
   r->Draw = Charmap_Draw;
+  r->KeyPress = NULL;
+  r->Dispose = NULL;
   return r;
 }

@@ -5,6 +5,7 @@
 #include "../string.h"
 #include "../mem.h"
 #include "../keyboard.h"
+#include "../debug.h"
 
 typedef struct _terminal_Locals{
   char *data;
@@ -38,12 +39,14 @@ void Terminal_KeyPress(window *this, char key){
 }
 
 void Terminal_Dispose(window *this){
+  dprintf("Terminal_Dispose()\n");
   terminal_Locals *l = this->Data;
   free(l->data);
   free(this->Data);
 }
 
 window *NEW_Terminal(){
+  dprintf("NEW_Terminal()\n");
   window *r = (window *)malloc(sizeof(window));
   r->Title = terminal_title;
   r->CurrentState = MAXIMIZED;

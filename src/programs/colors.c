@@ -26,5 +26,7 @@ window *NEW_Colors(){
   r->Title = colors_title;
   r->CurrentState = MAXIMIZED;
   r->Draw = Colors_Draw;
+  r->KeyPress = NULL;
+  r->Dispose = NULL;
   return r;
 }

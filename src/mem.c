@@ -28,7 +28,7 @@ void Memory_Init(){
 }
 
 void *malloc(int size){
-  dprintf("malloc ( %d )\n", size);
+  dprintf("malloc ( %d )", size);
   int i = 0;
   int pos = -1;
   // Search for smallest possible chunk with capacity >= size+4
@@ -40,6 +40,7 @@ void *malloc(int size){
   char *end = (char *)(mtTop[pos].offset + mtTop[pos].size - size);
   mtTop[pos].size -= size+4;
   *((int *)(end)-1) = size;
+  dprintf(" -> %d\n", (int)end);
   return (void *)(end);
 }
 
@@ -106,6 +107,8 @@ void free(void *ptr){
       k++;
     }
   }
+  mtTop[k].size = 0;
+  mtTop[k].offset = 0;
 }
 
 int memcmp(const void * s1, const void * s2, size_t n){

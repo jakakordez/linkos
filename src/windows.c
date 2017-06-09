@@ -5,6 +5,7 @@
 #include "keyboard.h"
 #include "mem.h"
 #include "windows.h"
+#include "debug.h"
 
 #define windowCount 6
 int openedWindows;
@@ -23,7 +24,7 @@ void alert(char *title, char *msg){
   alertOpen = 1;
 }
 
-void Init_Windows(){
+void Windows_Init(){
   for(int i = 0; i < windowCount; i++){
     windows[i] = NULL;
   }
@@ -48,7 +49,8 @@ void Init_Windows(){
   //alert_message = (char *)malloc(30*sizeof(char));
 }
 
-void Open_Window(window * new){
+void Windows_Open(window * new){
+  dprintf("Windows_Open(window *%d)\n", (int)new);
   if(openedWindows == windowCount) return;
   focusedWindow = openedWindows;
   windows[openedWindows++] = new;

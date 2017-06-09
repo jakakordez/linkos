@@ -5,6 +5,7 @@
 #include "../string.h"
 #include "../mem.h"
 #include "../keyboard.h"
+#include "../debug.h"
 
 char *programs_title = "Programs";
 void Programs_Draw(window *this){
@@ -21,12 +22,13 @@ void Programs_Draw(window *this){
 }
 
 void Programs_KeyPress(window *this, char key){
+  dprintf("Programs_KeyPress(char %d)\n", (int)key);
   int *n= (int *)this->Data;
   if(!RELEASED(key)){
     if(key == S || key == DownArrow) *n = (*n+1)%programCount;
     else if(key == W || key == UpArrow) *n = (*n+programCount-1)%programCount;
-    if(key == Return) Open_Window(list[*n].new());
-  };
+    if(key == Return) Windows_Open(list[*n].new());
+  }
 }
 
 window *NEW_Programs(){
@@ -37,5 +39,6 @@ window *NEW_Programs(){
   r->CurrentState = MAXIMIZED;
   r->KeyPress = Programs_KeyPress;
   r->Draw = Programs_Draw;
+  r->Dispose = NULL;
   return r;
 }

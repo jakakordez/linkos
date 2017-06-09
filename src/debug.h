@@ -1,7 +1,7 @@
 #ifndef DEBUG
 #define DEBUG
 #include <stdarg.h>
-void init_debug();
+void Debug_Init();
 void dprintf(char *format, ...);
 
 #endif

@@ -24,19 +24,21 @@ extern "C" /* Use C linkage for kernel_main. */
 void kernel_main() {
 	cli_initialize();
 	Memory_Init();
-	Init_Windows();
-	init_debug();
+	Windows_Init();
+	Debug_Init();
 	dprintf("Debugger started\n");
-	Open_Window(NEW_Programs());
+	Windows_Open(NEW_Programs());
 	//Open_Window(NEW_Memory());
 	//Open_Window(NEW_Terminal());
 	//cli_print(printf("%d %d %f %f", 0, 5, 2.0, 1.0));
 	//while(1);
 	while(1){
+		dprintf("Main while\n");
 		cli_fullscreen();
 		DrawTaskbar();
 		DrawWindows();
 		//cli_print(printf("   %d   ", malloc(1000)));
+		dprintf("Keypress\n");
 		KeyPress(Keyboard_Scan());
 	}
 }

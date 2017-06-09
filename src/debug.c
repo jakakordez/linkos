@@ -5,7 +5,7 @@
 
 char buffer[1000];
 
-void init_debug(){
+void Debug_Init(){
     init_serial(COM1);
 }
 

@@ -20,8 +20,8 @@ int leftBorder(window *);
 int rightBorder(window *);
 void windowBox(window *);
 
-void Init_Windows();
-void Open_Window(window *);
+void Windows_Init();
+void Windows_Open(window *);
 void DrawTaskbar();
 void DrawWindows();
 void KeyPress(char key);
