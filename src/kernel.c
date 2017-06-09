@@ -28,17 +28,16 @@ void kernel_main() {
 	Debug_Init();
 	dprintf("Debugger started\n");
 	Windows_Open(NEW_Programs());
-	//Open_Window(NEW_Memory());
-	//Open_Window(NEW_Terminal());
+	/*Windows_Open(NEW_Terminal());
+	Windows_Open(NEW_Terminal());
+	Windows_Open(NEW_Terminal());
+	Windows_Open(NEW_Memory());*/
 	//cli_print(printf("%d %d %f %f", 0, 5, 2.0, 1.0));
-	//while(1);
 	while(1){
-		dprintf("Main while\n");
 		cli_fullscreen();
 		DrawTaskbar();
 		DrawWindows();
 		//cli_print(printf("   %d   ", malloc(1000)));
-		dprintf("Keypress\n");
 		KeyPress(Keyboard_Scan());
 	}
 }

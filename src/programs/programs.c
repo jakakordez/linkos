@@ -22,7 +22,6 @@ void Programs_Draw(window *this){
 }
 
 void Programs_KeyPress(window *this, char key){
-  dprintf("Programs_KeyPress(char %d)\n", (int)key);
   int *n= (int *)this->Data;
   if(!RELEASED(key)){
     if(key == S || key == DownArrow) *n = (*n+1)%programCount;

@@ -18,7 +18,7 @@ void Terminal_Draw(window *this){
   cli_setcolor(make_color(COLOR_WHITE, COLOR_BLACK));
   cli_fill();
   cli_setcursor(0, 0);
-  cli_print(printf("/ $ %d %s_", l->data, l->data));
+  cli_print(printf("/ $ %s_", l->data));
 }
 int Shift = 0;
 void Terminal_KeyPress(window *this, char key){
@@ -52,7 +52,7 @@ window *NEW_Terminal(){
   r->CurrentState = MAXIMIZED;
   terminal_Locals *locals = malloc(sizeof(terminal_Locals));
 
-  locals->data = malloc(10000);
+  locals->data = malloc(100000);
   locals->position = 0;
   r->Data = locals;
   r->Draw = Terminal_Draw;

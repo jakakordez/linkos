@@ -50,7 +50,6 @@ void Windows_Init(){
 }
 
 void Windows_Open(window * new){
-  dprintf("Windows_Open(window *%d)\n", (int)new);
   if(openedWindows == windowCount) return;
   focusedWindow = openedWindows;
   windows[openedWindows++] = new;

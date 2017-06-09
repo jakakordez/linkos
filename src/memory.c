@@ -26,6 +26,7 @@ void Memory_Draw(window *this){
   cli_print("Free spaces table:");
   cli_setcursor(0, ++r);
   printFreeSpaces();
+  printChart();
 }
 
 void Memory_KeyPress(window *this, char key){

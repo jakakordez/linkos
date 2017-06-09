@@ -58,16 +58,13 @@ void free(void *ptr){
 
   int *location = (int *)(mtTop[pos].offset + mtTop[pos].size); // Location of first chunk
   while(1){
-    //cli_print(printf("A. chunk %d (%d) \n", (int)location, *location));
     if(((int)location)+(*location)+4 > (int)ptr) break; // Memory chunk containing this pointer
     else location = (int *)(((int)location)+(*location)+4); // Check next chunk (add chunk size to current position)
   }
 
   int j = 0;
-  while(1){
-    if(mtTop[j].size == 0) break; // Index for new free space
-    j++;
-  }
+  while(mtTop[j].size > 0) j++; // Index for new free space
+  
   // Insert new free space
   mtTop[j].offset = (int)location;
   mtTop[j].size = (*location)+4;
@@ -127,8 +124,7 @@ int memcmp(const void * s1, const void * s2, size_t n){
 char *memoryUsage(int mode){
   int j = 0;
   int fr = 0;
-  while(1){
-    if(mtTop[j].size == 0) break;
+  while(mtTop[j].size > 0){
     fr += mtTop[j].size;
     j++;
   }
@@ -138,6 +134,25 @@ char *memoryUsage(int mode){
 
 char *memorySpan(){
   return printf("%d - %d", heapTop, heapTop+heapSize);
+}
+
+void printChart(){
+  int w = 40;
+  int h = 20;
+  int step = heapSize/(w*h);
+  int t = 0;
+  for(int i = 0; i < 20; i++){
+    cli_setcursor(38, i);
+    for(int j = 0; j < 40; j++){
+      int loc = (int)heapTop+(((i*40)+j)*step);
+      cli_setcolor(make_color(0, 0));
+      if(loc >= mtTop[t].offset+mtTop[t].size){
+        cli_setcolor(make_color(6, 6));
+        t++;
+      }
+      cli_print(" ");
+    }
+  }
 }
 
 void printFreeSpaces(){
