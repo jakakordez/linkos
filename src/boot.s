@@ -76,7 +76,10 @@ _start:
   #int $0x10
   #movw $0x5678,0xB8000
 
-  	
+  #movb $0x00,%ah
+	#movb $0x13,%al
+	#int $0x10
+	#movw $0x5678,0xA000
 
 	# We are now ready to actually execute C code. We cannot embed that in an
 	# assembly file, so we'll create a kernel.c file in a moment. In that file,

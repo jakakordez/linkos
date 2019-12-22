@@ -22,6 +22,13 @@ extern "C" /* Use C linkage for kernel_main. */
 #endif
 
 void kernel_main() {
+	int *p = (int *)0xA000;
+	while(1){
+		p[0] = 0xFFFF;
+		p[1] = 0xAAAA;
+		p[2] = 0xBBBB;
+		p[3] = 0xCCCC;
+	}
 	cli_initialize();
 	Memory_Init();
 	Windows_Init();

@@ -4,7 +4,7 @@ export PATH="$PREFIX/bin:$PATH"
 
 rm -rf bin
 mkdir bin
-i686-elf-gcc -c src/ACPI.c -o bin/ACPI.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+#i686-elf-gcc -c src/ACPI.c -o bin/ACPI.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 i686-elf-gcc -c src/keyboard.c -o bin/keyboard.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 i686-elf-gcc -c src/io.c -o bin/io.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 i686-elf-gcc -c src/windows.c -o bin/windows.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
@@ -22,5 +22,6 @@ i686-elf-gcc -c src/programs/charmap.c -o bin/charmap.o -std=gnu99 -ffreestandin
 i686-elf-gcc -c src/programs/colors.c -o bin/colors.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
 i686-elf-as src/boot.s -o bin/boot.o
+nasm -obin/interrupt.o src/interrupt.asm
 
 i686-elf-gcc -T src/linker.ld -o bin/linkos.bin -ffreestanding -O2 -nostdlib bin/*.o -lgcc
